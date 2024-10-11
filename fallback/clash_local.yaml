@@ -1,22 +1,23 @@
+---
 #---------------------------------------------------#
 ## 配置文件需要放置在 $HOME/.config/clash/config.yaml
 #
+# clash/stash
+#
 # By：Kerronex
-# 最后一次更新：2023.11.5
+# 最后一次更新：2023.11.14
 #---------------------------------------------------#
-
 
 port: 1090
 socks-port: 1080
 allow-lan: true
-bind-address: "*"
+bind-address: '*'
 
 mode: rule
 log-level: silent
 
 external-controller: 127.0.0.1:9900
-secret: "o4UJC!cq2fP62E"
-
+secret: 'o4UJC!cq2fP62E'
 
 dns:
   enable: true
@@ -132,7 +133,6 @@ tun:
     - tcp://8.8.8.8:53
     - tcp://8.8.4.4:53
 
-
 proxy-groups:
   - name: 节点选择
     type: select
@@ -145,15 +145,22 @@ proxy-groups:
       - 狮城节点
       - 日本节点
       - 美国节点
-      - 英国节点
+      - 备用节点
+      - select-bg
       - DIRECT
     icon: https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/%24tash.png
+
+  - name: 'select-bg'
+    type: select
+    use:
+      - bg
+    tolerance: 200
 
   - name: 自动选择
     type: url-test
     url: http://www.gstatic.com/generate_204
     interval: 300
-    tolerance: 50
+    tolerance: 100
     proxies: null
     use: [SF]
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Auto_Speed.png
@@ -161,12 +168,10 @@ proxy-groups:
   - name: OpenAi
     type: select
     proxies:
+      - 美国节点
       - 节点选择
-      - 狮城节点
-      - 香港节点
       - 台湾节点
       - 日本节点
-      - 美国节点
     icon: https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/openai.png
   - name: 油管视频
     type: select
@@ -178,57 +183,72 @@ proxy-groups:
     type: select
     proxies:
       - 狮城节点
+      - 台湾节点
       - 节点选择
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Netflix.png
-
+  - name: Spotify
+    type: select
+    proxies:
+      - DIRECT
+      - 节点选择
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/Spotify.png
 
   - name: 香港节点
-    type: select
+    type: url-test
     proxies: null
     use: [SF]
     filter: 港|🇭🇰|香港|HK|Hong
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Hong_Kong.png
   - name: 日本节点
-    type: select
+    type: url-test
     proxies: null
     filter: 日|🇯🇵|日本|JP|Japan
     use: [SF]
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Japan.png
   - name: 美国节点
-    type: select
+    type: url-test
     proxies: null
     filter: 美|🇺🇸|美国|US|States|American
     use: [SF]
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/United_States.png
   - name: 台湾节点
-    type: select
+    type: url-test
     proxies: null
     filter: 台|🇨🇳|台湾|TW|Tai
     use: [SF]
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Taiwan.png
   - name: 狮城节点
-    type: select
+    type: url-test
     proxies: null
     filter: 坡|🇸🇬|新加坡|狮城|SG|Singapore
     use: [SF]
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Singapore.png
-  - name: 英国节点
-    type: select
+  - name: 备用节点
+    type: url-test
     proxies: null
-    filter: 🇬🇧|英国|英|英格兰|UK|United Kingdom
+    filter: 🇬🇧|英国|英|德国|法国|加拿大
     use: [SF]
     icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/United_Kingdom.png
 
 proxy-providers:
   SF:
     type: http
-    url: "https://&flag=clash"
+    url: 'https://xxxxx.xx/subscribe?token=xxxxxx&flag=clash'
     path: ./conf/yuyan.yaml
     interval: 28800
     health-check:
       enable: true
       interval: 7200
       url: http://www.gstatic.com/generate_204
+  bg:
+    type: http
+    url: 'https://kkkkķk.biz/api/v1/client/subscribe?token=hhhhhhhhhhhhhhkkkk&flag=clash'
+    path: ./conf/byg.yaml
+    interval: 28800
+    health-check:
+      enable: true
+      interval: 7200
+      url: http://cp.cloudflare.com/generate_204
 
 rules:
   - DOMAIN,ess.apple.com,DIRECT
@@ -237,6 +257,13 @@ rules:
   - DOMAIN-KEYWORD,apac-china-courier,DIRECT
   - DOMAIN,clash.razord.top,DIRECT
   - DOMAIN,yacd.haishan.me,DIRECT
+
+  # 自定义服务
+  - DOMAIN-SUFFIX,jdl.com,DIRECT
+  - DOMAIN-SUFFIX,netflixtown.com,DIRECT
+  - DOMAIN-SUFFIX,zxxk.com,DIRECT
+  - DOMAIN-SUFFIX,qcc.com,DIRECT
+  - DOMAIN-SUFFIX,mini4k.com,DIRECT
 
   # Google
   - DOMAIN-SUFFIX,xn--ngstr-lra8j.com,节点选择
@@ -415,7 +442,10 @@ rules:
   - DOMAIN-SUFFIX,koodomobile.com,DIRECT
   - DOMAIN-SUFFIX,koodomobile.ca,DIRECT
   # OpenAi
+  - DOMAIN,ai.cn,OpenAi
   - DOMAIN-SUFFIX,ai.com,OpenAi
+  - DOMAIN-SUFFIX,oaistatic.com,OpenAi
+  - DOMAIN-SUFFIX,oaiusercontent.com,OpenAi
   - DOMAIN-SUFFIX,auth0.com,OpenAi
   - DOMAIN-SUFFIX,challenges.cloudflare.com,OpenAi
   - DOMAIN-SUFFIX,client-api.arkoselabs.com,OpenAi
@@ -483,6 +513,37 @@ rules:
   - IP-CIDR,203.75.84.0/24,奈飞视频,no-resolve
   - IP-CIDR,207.45.72.0/22,奈飞视频,no-resolve
   - IP-CIDR,208.75.76.0/22,奈飞视频,no-resolve
+  # Spotify
+  - DOMAIN,audio4-ak-spotify-com.akamaized.net,Spotify
+  - DOMAIN,cdn-spotify-experiments.conductrics.com,Spotify
+  - DOMAIN,heads-ak-spotify-com.akamaized.net,Spotify
+  - DOMAIN,spotify.com.edgesuite.net,Spotify
+  - DOMAIN,spotify.map.fastly.net,Spotify
+  - DOMAIN,spotify.map.fastlylb.net,Spotify
+  - DOMAIN-SUFFIX,audio-ak-spotify-com.akamaized.net,Spotify
+  - DOMAIN-SUFFIX,byspotify.com,Spotify
+  - DOMAIN-SUFFIX,heads4-ak-spotify-com.akamaized.net,Spotify
+  - DOMAIN-SUFFIX,pscdn.co,Spotify
+  - DOMAIN-SUFFIX,scdn.co,Spotify
+  - DOMAIN-SUFFIX,spoti.fi,Spotify
+  - DOMAIN-SUFFIX,spotify-com.akamaized.net,Spotify
+  - DOMAIN-SUFFIX,spotify-everywhere.com,Spotify
+  - DOMAIN-SUFFIX,spotify.com,Spotify
+  - DOMAIN-SUFFIX,spotify.design,Spotify
+  - DOMAIN-SUFFIX,spotifycdn.com,Spotify
+  - DOMAIN-SUFFIX,spotifycdn.net,Spotify
+  - DOMAIN-SUFFIX,spotifycharts.com,Spotify
+  - DOMAIN-SUFFIX,spotifycodes.com,Spotify
+  - DOMAIN-SUFFIX,spotifyforbrands.com,Spotify
+  - DOMAIN-SUFFIX,spotifyjobs.com,Spotify
+  - DOMAIN-SUFFIX,spotifynewsroom.jp,Spotify
+  - DOMAIN-SUFFIX,spotilocal.com,Spotify
+  - DOMAIN-SUFFIX,tospotify.com,Spotify
+  - DOMAIN-KEYWORD,-spotify-,Spotify
+  - DOMAIN-KEYWORD,spotify.com,Spotify
+  - IP-CIDR,104.154.127.126/32,Spotify,no-resolve
+  - IP-CIDR,35.186.224.47/32,Spotify,no-resolve
+  - PROCESS-NAME,com.spotify.music,Spotify
   # 国内媒体 - 2023-10-23 21:04:56
   # Bilibili 哔哩哔哩
   - DOMAIN,apiintl.biliapi.net,DIRECT
@@ -1620,7 +1681,7 @@ rules:
   - DOMAIN-SUFFIX,vimeo.com,节点选择
   - DOMAIN-SUFFIX,vine.co,节点选择
   - DOMAIN-SUFFIX,vox-cdn.com,节点选择
-  
+
   # 本碎片只包含常见广告关键字、广告联盟。无副作用，放心使用
   - DOMAIN-KEYWORD,admarvel,REJECT
   - DOMAIN-KEYWORD,admaster,REJECT
@@ -2217,7 +2278,6 @@ rules:
   - DOMAIN-SUFFIX,go.10086.cn,REJECT
   - DOMAIN-SUFFIX,hivedata.cc,REJECT
   - DOMAIN-SUFFIX,navi.gd.chinamobile.com,REJECT
-
 
   # 包含常用应用的各种去广告规则。
   # 可能有轻微副作用，可放心使用。（如果网站功能和广告冲突，会删掉去广告规则）
@@ -3302,7 +3362,9 @@ rules:
   - DOMAIN-SUFFIX,tralog.ganji.com,REJECT
   - DOMAIN-SUFFIX,up.qingdaonews.com,REJECT
   - DOMAIN-SUFFIX,vaserviece.10jqka.com.cn,REJECT
-  
+
+  # 自定义部分
+  #   - DOMAIN-SUFFIX,kin6c1.com,DIRECT
   - GEOIP,LAN,DIRECT,no-resolve
   - GEOIP,CN,DIRECT,no-resolve
   - MATCH,节点选择
