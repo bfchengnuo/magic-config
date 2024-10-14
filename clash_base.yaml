@@ -1,0 +1,548 @@
+---
+#---------------------------------------------------#
+## 配置文件需要放置在 $HOME/.config/clash/config.yaml
+#
+# clash/stash
+#
+# By：Kerronex
+# 最后一次更新：2024.10.11
+#---------------------------------------------------#
+
+port: 1090
+socks-port: 1080
+allow-lan: true
+bind-address: '*'
+
+mode: rule
+log-level: silent
+
+external-controller: 127.0.0.1:9900
+secret: 'o4UJC!cq2fP62E'
+
+dns:
+  enable: true
+  listen: 0.0.0.0:53
+  ipv6: true # 当此选项为 false 时, AAAA 请求将返回空
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16 # Fake IP 地址池 (CIDR 形式)
+  fake-ip-filter:
+    - '*.lan'
+    - '*.localdomain'
+    - '*.example'
+    - '*.invalid'
+    - '*.localhost'
+    - '*.test'
+    - '*.local'
+    - '*.home.arpa'
+    - 'time.*.com'
+    - 'time.*.gov'
+    - 'time.*.edu.cn'
+    - 'time.*.apple.com'
+    - 'time1.*.com'
+    - 'time2.*.com'
+    - 'time3.*.com'
+    - 'time4.*.com'
+    - 'time5.*.com'
+    - 'time6.*.com'
+    - 'time7.*.com'
+    - 'ntp.*.com'
+    - 'ntp1.*.com'
+    - 'ntp2.*.com'
+    - 'ntp3.*.com'
+    - 'ntp4.*.com'
+    - 'ntp5.*.com'
+    - 'ntp6.*.com'
+    - 'ntp7.*.com'
+    - '*.time.edu.cn'
+    - '*.ntp.org.cn'
+    - '+.pool.ntp.org'
+    - 'time1.cloud.tencent.com'
+    - 'music.163.com'
+    - '*.music.163.com'
+    - '*.126.net'
+    - 'musicapi.taihe.com'
+    - 'music.taihe.com'
+    - 'songsearch.kugou.com'
+    - 'trackercdn.kugou.com'
+    - '*.kuwo.cn'
+    - 'api-jooxtt.sanook.com'
+    - 'api.joox.com'
+    - 'joox.com'
+    - 'y.qq.com'
+    - '*.y.qq.com'
+    - 'streamoc.music.tc.qq.com'
+    - 'mobileoc.music.tc.qq.com'
+    - 'isure.stream.qqmusic.qq.com'
+    - 'dl.stream.qqmusic.qq.com'
+    - 'aqqmusic.tc.qq.com'
+    - 'amobile.music.tc.qq.com'
+    - '*.xiami.com'
+    - '*.music.migu.cn'
+    - 'music.migu.cn'
+    - '*.msftconnecttest.com'
+    - '*.msftncsi.com'
+    - 'msftconnecttest.com'
+    - 'msftncsi.com'
+    - 'localhost.ptlogin2.qq.com'
+    - 'localhost.sec.qq.com'
+    - '+.srv.nintendo.net'
+    - '+.stun.playstation.net'
+    - 'xbox.*.microsoft.com'
+    - 'xnotify.xboxlive.com'
+    - '+.battlenet.com.cn'
+    - '+.wotgame.cn'
+    - '+.wggames.cn'
+    - '+.wowsgame.cn'
+    - '+.wargaming.net'
+    - 'proxy.golang.org'
+    - 'stun.*.*'
+    - 'stun.*.*.*'
+    - '+.stun.*.*'
+    - '+.stun.*.*.*'
+    - '+.stun.*.*.*.*'
+    - 'heartbeat.belkin.com'
+    - '*.linksys.com'
+    - '*.linksyssmartwifi.com'
+    - '*.router.asus.com'
+    - 'mesu.apple.com'
+    - 'swscan.apple.com'
+    - 'swquery.apple.com'
+    - 'swdownload.apple.com'
+    - 'swcdn.apple.com'
+    - 'swdist.apple.com'
+    - 'lens.l.google.com'
+    - 'stun.l.google.com'
+    - '+.nflxvideo.net'
+    - '*.square-enix.com'
+    - '*.finalfantasyxiv.com'
+    - '*.ffxiv.com'
+    - '*.mcdn.bilivideo.cn'
+  nameserver:
+    - https://doh.pub/dns-query
+    - https://dns.alidns.com/dns-query
+
+tun:
+  enable: false
+  stack: gvisor # 或 system
+  macOS-auto-route: true
+  macOS-auto-detect-interface: true
+  dns-hijack:
+    - tcp://8.8.8.8:53
+    - tcp://8.8.4.4:53
+
+proxy-groups:
+  - name: Proxy
+    type: select
+    use:
+      - SF
+    proxies:
+      - AutoTest
+      - HK
+      - TW
+      - SG
+      - JP
+      - US
+      - 备用节点
+      - select-bg
+      - DIRECT
+    icon: https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/%24tash.png
+
+  - name: 'select-bg'
+    type: select
+    use:
+      - bg
+    tolerance: 200
+
+  - name: AutoTest
+    type: url-test
+    url: http://www.gstatic.com/generate_204
+    interval: 300
+    tolerance: 100
+    proxies: null
+    use: [SF]
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Auto_Speed.png
+
+  - name: AI
+    type: select
+    proxies:
+      - US
+      - Proxy
+      - TW
+      - JP
+    icon: https://github.com/shindgewongxj/WHATSINStash/raw/main/icon/openai.png
+  - name: Netflix
+    type: select
+    proxies:
+      - SG
+      - TW
+      - Proxy
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Universal/Netflix.png
+  - name: Spotify
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Social_Media/Spotify.png
+  - name: Speedtest
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+  - name: Telegram
+    type: select
+    proxies:
+      - SG
+      - TW
+      - JP
+      - Proxy
+  - name: NoMatch
+    type: select
+    proxies:
+      - DIRECT
+      - Proxy
+
+  - name: HK
+    type: url-test
+    proxies: null
+    use: [SF]
+    filter: 港|🇭🇰|香港|HK|Hong
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Hong_Kong.png
+  - name: JP
+    type: url-test
+    proxies: null
+    filter: 日|🇯🇵|日本|JP|Japan
+    use: [SF]
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Japan.png
+  - name: US
+    type: url-test
+    proxies: null
+    filter: 美|🇺🇸|美国|US|States|American
+    use: [SF]
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/United_States.png
+  - name: TW
+    type: url-test
+    proxies: null
+    filter: 台|🇨🇳|台湾|TW|Tai
+    use: [SF]
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Taiwan.png
+  - name: SG
+    type: url-test
+    proxies: null
+    filter: 坡|🇸🇬|新加坡|狮城|SG|Singapore
+    use: [SF]
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/Singapore.png
+  - name: 备用节点
+    type: url-test
+    proxies: null
+    filter: 🇬🇧|英国|英|德国|法国|加拿大
+    use: [SF]
+    icon: https://raw.githubusercontent.com/Semporia/Hand-Painted-icon/master/Rounded_Rectangle/United_Kingdom.png
+
+proxy-providers:
+  SF:
+    type: http
+    url: 'https://xxxxx.xx/subscribe?token=xxxxxx&flag=clash'
+    path: ./conf/sf.yaml
+    interval: 28800
+    health-check:
+      enable: true
+      interval: 7200
+      url: http://www.gstatic.com/generate_204
+  bg:
+    type: http
+    url: 'https://kkkkķk.biz/api/v1/client/subscribe?token=hhhhhhhhhhhhhhkkkk&flag=clash'
+    path: ./conf/bg.yaml
+    interval: 28800
+    health-check:
+      enable: true
+      interval: 7200
+      url: http://cp.cloudflare.com/generate_204
+
+rule-providers:
+  reject_non_ip_drop:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/reject-drop.txt
+    path: ./ruleset/reject_non_ip_drop.txt
+  reject_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/reject.txt
+    path: ./ruleset/reject_non_ip.txt
+  reject_domainset:
+    type: http
+    behavior: domain
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/domainset/reject.txt
+    path: ./ruleset/reject_domainset.txt
+  reject_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/ip/reject.txt
+    path: ./ruleset/reject_ip.txt
+  sogouinput:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/sogouinput.txt
+    path: ./ruleset/sogouinput.txt
+  stream_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/stream.txt
+    path: ./ruleset/stream_non_ip.txt
+  stream_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/ip/stream.txt
+    path: ./ruleset/stream_ip.txt
+  ai_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/ai.txt
+    path: ./ruleset/ai_non_ip.txt
+  telegram_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/telegram.txt
+    path: ./ruleset/telegram_non_ip.txt
+  telegram_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/ip/telegram.txt
+    path: ./ruleset/telegram_ip.txt
+  apple_cdn:
+    type: http
+    behavior: domain
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/domainset/apple_cdn.txt
+    path: ./ruleset/apple_cdn.txt
+  apple_services:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/apple_services.txt
+    path: ./ruleset/apple_services.txt
+  apple_cn_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/apple_cn.txt
+    path: ./ruleset/apple_cn_non_ip.txt
+  lan_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/lan.txt
+    path: ./ruleset/lan_non_ip.txt
+  lan_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/ip/lan.txt
+    path: ./ruleset/lan_ip.txt
+  domestic_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/domestic.txt
+    path: ./ruleset/domestic_non_ip.txt
+  direct_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/direct.txt
+    path: ./ruleset/direct_non_ip.txt
+  global_non_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/non_ip/global.txt
+    path: ./ruleset/global_non_ip.txt
+  domestic_ip:
+    type: http
+    behavior: classical
+    format: text
+    interval: 43200
+    url: https://ruleset.skk.moe/Clash/ip/domestic.txt
+    path: ./ruleset/domestic_ip.txt
+  spotify:
+    type: http
+    behavior: classical
+    interval: 43200
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Spotify/Spotify.yaml
+    path: ./ruleset/Spotify.yaml
+  speedtest:
+    type: http
+    behavior: classical
+    interval: 43200
+    url: https://cdn.jsdelivr.net/gh/blackmatrix7/ios_rule_script@master/rule/Clash/Speedtest/Speedtest.yaml
+    path: ./ruleset/Speedtest.yaml
+
+rules:
+  - DOMAIN,ess.apple.com,DIRECT
+  - PROCESS-NAME,maps,DIRECT
+  - DOMAIN-KEYWORD,courier.push.apple.com,DIRECT
+  - DOMAIN-KEYWORD,apac-china-courier,DIRECT
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+
+  # 自定义服务
+  - DOMAIN-SUFFIX,micu.hk,DIRECT
+  - DOMAIN-SUFFIX,miwifi.com,DIRECT
+  - DOMAIN-SUFFIX,hanime1.me,HK
+  - DOMAIN-SUFFIX,ruishihui.com,DIRECT
+  - DOMAIN,video1.beijcloud.com,DIRECT
+  - DOMAIN-SUFFIX,mitang.tv,DIRECT
+  - DOMAIN-SUFFIX,xiaomi.eu,Proxy
+  - DOMAIN-SUFFIX,ffzy-online5.com,DIRECT
+  - DOMAIN-SUFFIX,cnki.net,DIRECT
+  - DOMAIN-SUFFIX,wanfangtech.net,DIRECT
+  - DOMAIN-SUFFIX,landiannews.com,DIRECT
+  - DOMAIN,desktop.parallels.com,REJECT
+  - DOMAIN-SUFFIX,paperyy.com,DIRECT
+  - DOMAIN-SUFFIX,todesk.com,DIRECT
+  - DOMAIN-SUFFIX,jisuts.com,DIRECT
+  - DOMAIN-SUFFIX,jszyplay.com,DIRECT
+  - DOMAIN-SUFFIX,akamaized.net,DIRECT
+  - DOMAIN-SUFFIX,deepseek.com,DIRECT
+  - DOMAIN-SUFFIX,shejiben.com,DIRECT
+  - DOMAIN-SUFFIX,tuozhe8.com,DIRECT
+  - DOMAIN,flomoapp.com,DIRECT
+  - DOMAIN-SUFFIX,midea.com.cn,DIRECT
+  - DOMAIN-SUFFIX,yeelight.com,DIRECT
+  - DOMAIN-SUFFIX,kujiale.com,DIRECT
+  # 自定义规则
+  # ---内置规则集---
+  # > Safari 防跳转
+  - DOMAIN,app-site-association.cdn-apple.com,REJECT
+  # ban UDP on Youtube
+  - SCRIPT,quic,REJECT,no-track
+  # ban National Anti-fraud Center
+  - DOMAIN,prpr.96110.cn.com,DIRECT
+  - DOMAIN-KEYWORD,96110,REJECT
+  - DOMAIN-SUFFIX,gjfzpt.cn,REJECT
+  # > 🆕 拒绝国家反诈中心请求
+  - DOMAIN-SUFFIX,gjfzpt.cn,REJECT
+  # SYSTEM
+  - DOMAIN,ess.apple.com,DIRECT
+  - PROCESS-NAME,maps,DIRECT
+  - DOMAIN-KEYWORD,courier.push.apple.com,DIRECT
+  - DOMAIN-KEYWORD,apac-china-courier,DIRECT
+  - DOMAIN,clash.razord.top,DIRECT
+  - DOMAIN,yacd.haishan.me,DIRECT
+  # 自定义服务
+  - DOMAIN-SUFFIX,jdl.com,DIRECT
+  - DOMAIN-SUFFIX,netflixtown.com,DIRECT
+  - DOMAIN-SUFFIX,zxxk.com,DIRECT
+  - DOMAIN-SUFFIX,qcc.com,DIRECT
+  - DOMAIN-SUFFIX,mini4k.com,DIRECT
+
+  # > KEYWORD
+  - DOMAIN-KEYWORD,docker,Proxy
+  - DOMAIN-KEYWORD,mastodon,Proxy
+  - DOMAIN-KEYWORD,techhub.social,Proxy
+  - DOMAIN-KEYWORD,macked,Proxy
+  - DOMAIN-KEYWORD,leensasf,Proxy
+  # > SUFFIX
+  - DOMAIN-SUFFIX,nssurge.com,Proxy
+  - DOMAIN-SUFFIX,surgee.me,Proxy
+  - DOMAIN-SUFFIX,st7eve.me,Proxy
+  - DOMAIN-SUFFIX,www.torrentmac.net,Proxy
+  - DOMAIN-SUFFIX,cloudflare.com,Proxy
+  - DOMAIN-SUFFIX,appstorrent.ru,DIRECT
+  # > DOMAIN
+  - DOMAIN,jable.tv,Proxy
+  - DOMAIN,api.amplitude.com,Proxy
+  - DOMAIN,api.revenuecat.com,REJECT
+  - DOMAIN,m.cmx.im,Proxy
+
+  # append
+  - DOMAIN-SUFFIX,apple.com,DIRECT
+  - DOMAIN-SUFFIX,parallels.com,Proxy
+  - DOMAIN-SUFFIX,sourceforge.net,Proxy
+  - DOMAIN-SUFFIX,macserialjunkie.com,Proxy
+  - DOMAIN-SUFFIX,xxx5217.com,Proxy
+  - DOMAIN-SUFFIX,brew.sh,Proxy
+  - DOMAIN-SUFFIX,docker.io,Proxy
+  - DOMAIN,raw.githubusercontent.com,Proxy
+  - DOMAIN-SUFFIX,cocopilot.org,Proxy
+  - DOMAIN-SUFFIX,google.com,Proxy
+  - DOMAIN-SUFFIX,github.com,Proxy
+  - DOMAIN-KEYWORD,github,Proxy
+  - DOMAIN,content-autofill.googleapis.com,Proxy
+  - DOMAIN,avatars.githubusercontent.com,Proxy
+  - DOMAIN,raw.githubusercontent.com,Proxy
+  - DOMAIN,github.githubassets.com,Proxy
+  - DOMAIN-SUFFIX,terabox.com,Proxy
+  - DOMAIN-SUFFIX,nssurge.com,Proxy
+  - DOMAIN,plugins.jetbrains.com,Proxy
+  - DOMAIN,cdn-fastly.obsproject.com,Proxy
+  - DOMAIN,avatars.githubusercontent.com,Proxy
+  - DOMAIN,public-lumina.hex-rays.com,Proxy
+  - DOMAIN,dl.google.com,DIRECT
+  - DOMAIN,repo.maven.apache.org,Proxy
+  - DOMAIN-KEYWORD,google.com,Proxy
+  - DOMAIN-SUFFIX,claude.ai,Proxy
+  - DOMAIN-SUFFIX,maven.apache.org,DIRECT
+
+  - RULE-SET,reject_non_ip,REJECT
+  - RULE-SET,reject_domainset,REJECT
+  - RULE-SET,sogouinput,REJECT
+  - RULE-SET,spotify,Spotify
+  - RULE-SET,stream_non_ip,Netflix
+  - RULE-SET,ai_non_ip,AI
+  - RULE-SET,telegram_non_ip,Telegram
+  - RULE-SET,apple_cdn,DIRECT
+  - RULE-SET,apple_services,DIRECT
+  - RULE-SET,apple_cn_non_ip,DIRECT
+  - RULE-SET,lan_non_ip,DIRECT
+  - RULE-SET,domestic_non_ip,DIRECT
+  - RULE-SET,direct_non_ip,DIRECT
+  - RULE-SET,speedtest,Speedtest
+  - RULE-SET,global_non_ip,Proxy
+
+  - RULE-SET,reject_ip,REJECT
+  - RULE-SET,reject_non_ip_drop,REJECT
+  - RULE-SET,stream_ip,Netflix
+  - RULE-SET,telegram_ip,Telegram
+  - RULE-SET,lan_ip,DIRECT
+  - RULE-SET,domestic_ip,DIRECT
+
+  # 自定义部分
+  - GEOIP,LAN,DIRECT,no-resolve
+  - GEOIP,CN,DIRECT,no-resolve
+  - MATCH,NoMatch
+
+script:
+  shortcuts:
+    quic: network == 'udp' and dst_port == 443
